@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import GroupForm from './GroupForm';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { addGroup, updateGroup, deleteGroup, fetchStatuses } from '../redux/actions';
+// components/GroupList.js
+
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import GroupForm from "./GroupForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  addGroup,
+  updateGroup,
+  deleteGroup,
+  fetchStatuses,
+} from "../redux/actions";
 
 const GroupList = () => {
   const dispatch = useDispatch();
@@ -21,7 +28,7 @@ const GroupList = () => {
 
   const handleAddGroup = () => {
     if (groups.length >= 10) {
-      alert('You can only add up to 10 items in total.');
+      alert("You can only add up to 10 items in total.");
       return;
     }
     dispatch(addGroup());
@@ -38,14 +45,18 @@ const GroupList = () => {
             updateGroup={(index, group) => dispatch(updateGroup(index, group))}
             deleteGroup={(index) => dispatch(deleteGroup(index))}
           />
-          {statuses && statuses[group.from] !== undefined && (
+          {statuses && (
             <div className="statuses">
               {Array.from({ length: group.to - group.from + 1 }, (_, i) => (
                 <span key={i}>
-                  {group.from + i}({statuses[group.from + i] ? 'True' : 'False'}){i !== group.to - group.from ? ',  ' : ' '}
+                  ({group.from + i}){" "}
+                  {statuses[group.from + i] ? "Completed" : "Not Completed"}
+                  {i !== group.to - group.from ? ", " : " "}
                 </span>
               ))}
-              <span className="green-tick"><FontAwesomeIcon icon={faCheck} /></span>
+              <span className="green-tick">
+                <FontAwesomeIcon icon={faCheck} />
+              </span>
             </div>
           )}
         </div>

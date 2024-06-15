@@ -1,4 +1,12 @@
-import { ADD_GROUP, UPDATE_GROUP, DELETE_GROUP, SET_STATUSES, RESET_STATUSES } from './actions';
+// src/redux/reducers.js
+
+import {
+  ADD_GROUP,
+  UPDATE_GROUP,
+  DELETE_GROUP,
+  SET_STATUSES,
+  RESET_STATUSES,
+} from "./actionType";
 
 const initialState = {
   groups: [],
@@ -11,7 +19,7 @@ const rootReducer = (state = initialState, action) => {
       if (state.groups.length >= 10) return state; // Limit to 10 items
       return {
         ...state,
-        groups: [...state.groups, { from: '', to: '' }],
+        groups: [...state.groups, { from: "", to: "" }],
         statuses: null,
       };
     case UPDATE_GROUP:
@@ -23,7 +31,9 @@ const rootReducer = (state = initialState, action) => {
         statuses: null,
       };
     case DELETE_GROUP:
-      const updatedGroups = state.groups.filter((_, index) => index !== action.payload);
+      const updatedGroups = state.groups.filter(
+        (_, index) => index !== action.payload
+      );
       return {
         ...state,
         groups: updatedGroups,

@@ -1,8 +1,13 @@
-export const ADD_GROUP = 'ADD_GROUP';
-export const UPDATE_GROUP = 'UPDATE_GROUP';
-export const DELETE_GROUP = 'DELETE_GROUP';
-export const SET_STATUSES = 'SET_STATUSES';
-export const RESET_STATUSES = 'RESET_STATUSES';
+// src/redux/actions.js
+
+import {
+  ADD_GROUP,
+  UPDATE_GROUP,
+  DELETE_GROUP,
+  SET_STATUSES,
+  RESET_STATUSES,
+} from "./actionType";
+import axios from "axios";
 
 export const addGroup = () => ({
   type: ADD_GROUP,
@@ -27,7 +32,7 @@ export const resetStatuses = () => ({
   type: RESET_STATUSES,
 });
 
-export const fetchStatuses = () => (dispatch, getState) => {
+export const fetchStatuses = () => async (dispatch, getState) => {
   const { groups } = getState();
 
   const validateGroups = () => {
@@ -45,16 +50,24 @@ export const fetchStatuses = () => (dispatch, getState) => {
   };
 
   if (!validateGroups()) {
-    alert('Groups are invalid');
+    alert("Groups are invalid");
     return;
   }
 
-  let newStatuses = {};
-  for (let group of groups) {
-    for (let i = group.from; i <= group.to; i++) {
-      newStatuses[i] = Math.random() < 0.5;
+  try {
+    let newStatuses = {};
+    for (let group of groups) {
+      for (let i = group.from; i <= group.to; i++) {
+        const response = await axios.get(
+          `https://jsonplaceholder.typicode.com/todos/${i}`
+        );
+        console.log(`Fetched data for todo item ${i}:`, response.data); // Log fetched data
+        newStatuses[i] = response.data.completed;
+      }
     }
+    console.log("Final statuses:", newStatuses); // Log final statuses
+    dispatch(setStatuses(newStatuses));
+  } catch (error) {
+    console.error("Error fetching statuses:", error);
   }
-
-  dispatch(setStatuses(newStatuses));
 };

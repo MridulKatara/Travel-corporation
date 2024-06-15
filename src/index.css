@@ -11,7 +11,6 @@
   margin-bottom: 10px;
 }
 
-/* Styling for group input fields */
 .group-form input {
   width: 50px;
   margin: 0 5px;
@@ -21,12 +20,10 @@
   padding: 5px;
 }
 
-/* Styling for the "to" span */
 .group-form span {
   margin: 0 5px;
 }
 
-/* Styling for delete button */
 .group-form button {
   margin-left: 10px;
   cursor: pointer;
@@ -37,39 +34,39 @@
   border-radius: 4px;
 }
 
-/* Container for each group */
 .group-container {
   display: flex;
-  flex-direction: column;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 4px;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   background-color: #f9f9f9;
 }
 
-/* Styling for status section */
 .statuses {
-  margin-top: 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.statuses p {
-  font-weight: bold;
+.statuses span {
+  margin-right: 5px;
 }
 
-.statuses ul {
-  list-style-type: none;
-  padding: 0;
+.green-tick {
+  color: green;
+  font-size: 1.5em;
+  margin-left: 10px;
 }
 
-.statuses li {
-  background-color: #e7f3ff;
-  margin: 5px 0;
-  padding: 5px;
-  border-radius: 4px;
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
-/* Styling for buttons */
 button {
   background-color: #007bff;
   border: none;
@@ -79,20 +76,10 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 10px 0;
   cursor: pointer;
   border-radius: 4px;
 }
 
 button:hover {
   background-color: #0056b3;
-}
-
-/* Add some space between form elements and buttons */
-.group-container + button {
-  margin-top: 20px;
-}
-
-.group-container + button + button {
-  margin-left: 10px;
 }
