@@ -1,20 +1,35 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import GroupForm from "./GroupForm";
-import {
-  addGroup,
-  updateGroup,
-  deleteGroup,
-  fetchStatuses,
-} from "../redux/actions";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import GroupForm from './GroupForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { addGroup, updateGroup, deleteGroup, fetchStatuses } from '../redux/actions';
 
 const GroupList = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups);
   const statuses = useSelector((state) => state.statuses);
 
+  useEffect(() => {
+    if (groups.length === 0 && statuses === null) {
+      dispatch(addGroup());
+      dispatch(updateGroup(0, { from: 1, to: 2 }));
+      dispatch(addGroup());
+      dispatch(updateGroup(1, { from: 3, to: 10 }));
+    }
+  }, [dispatch, groups.length, statuses]);
+
+  const handleAddGroup = () => {
+    if (groups.length >= 10) {
+      alert('You can only add up to 10 items in total.');
+      return;
+    }
+    dispatch(addGroup());
+  };
+
   return (
     <div>
+      <h1>Todo Group Status</h1>
       {groups.map((group, index) => (
         <div key={index} className="group-container">
           <GroupForm
@@ -23,23 +38,22 @@ const GroupList = () => {
             updateGroup={(index, group) => dispatch(updateGroup(index, group))}
             deleteGroup={(index) => dispatch(deleteGroup(index))}
           />
-          {statuses && (
+          {statuses && statuses[group.from] !== undefined && (
             <div className="statuses">
-              <p>Status for Group {index + 1}:</p>
-              <ul>
-                {Array.from({ length: group.to - group.from + 1 }, (_, i) => (
-                  <li key={i}>
-                    Item {parseInt(group.from) + i}:{" "}
-                    {statuses[parseInt(group.from) + i]}
-                  </li>
-                ))}
-              </ul>
+              {Array.from({ length: group.to - group.from + 1 }, (_, i) => (
+                <span key={i}>
+                  {group.from + i}({statuses[group.from + i] ? 'True' : 'False'}){i !== group.to - group.from ? ',  ' : ' '}
+                </span>
+              ))}
+              <span className="green-tick"><FontAwesomeIcon icon={faCheck} /></span>
             </div>
           )}
         </div>
       ))}
-      <button onClick={() => dispatch(addGroup())}>Add Group</button>
-      <button onClick={() => dispatch(fetchStatuses())}>Show Status</button>
+      <div className="buttons">
+        <button onClick={handleAddGroup}>Add Group</button>
+        <button onClick={() => dispatch(fetchStatuses())}>Show Status</button>
+      </div>
     </div>
   );
 };

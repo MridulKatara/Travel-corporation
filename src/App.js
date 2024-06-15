@@ -1,10 +1,10 @@
 import React from "react";
 import GroupList from "./components/GroupList";
+import './App.css';
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>Todo List Groups</h1>
+    <div className="app">
       <GroupList />
     </div>
   );

@@ -1,9 +1,8 @@
-import { getTodoItem } from "../api/todoApi";
-
-export const ADD_GROUP = "ADD_GROUP";
-export const UPDATE_GROUP = "UPDATE_GROUP";
-export const DELETE_GROUP = "DELETE_GROUP";
-export const SET_STATUSES = "SET_STATUSES";
+export const ADD_GROUP = 'ADD_GROUP';
+export const UPDATE_GROUP = 'UPDATE_GROUP';
+export const DELETE_GROUP = 'DELETE_GROUP';
+export const SET_STATUSES = 'SET_STATUSES';
+export const RESET_STATUSES = 'RESET_STATUSES';
 
 export const addGroup = () => ({
   type: ADD_GROUP,
@@ -24,13 +23,17 @@ export const setStatuses = (statuses) => ({
   payload: statuses,
 });
 
-export const fetchStatuses = () => async (dispatch, getState) => {
+export const resetStatuses = () => ({
+  type: RESET_STATUSES,
+});
+
+export const fetchStatuses = () => (dispatch, getState) => {
   const { groups } = getState();
 
   const validateGroups = () => {
     let covered = new Set();
     for (let group of groups) {
-      for (let i = parseInt(group.from); i <= parseInt(group.to); i++) {
+      for (let i = group.from; i <= group.to; i++) {
         if (covered.has(i)) return false;
         covered.add(i);
       }
@@ -42,21 +45,14 @@ export const fetchStatuses = () => async (dispatch, getState) => {
   };
 
   if (!validateGroups()) {
-    alert("Groups are invalid");
+    alert('Groups are invalid');
     return;
   }
 
   let newStatuses = {};
   for (let group of groups) {
-    for (let i = parseInt(group.from); i <= parseInt(group.to); i++) {
-      try {
-        const todo = await getTodoItem(i);
-        console.log(`Fetched todo item ${i}:`, todo);
-        newStatuses[i] = todo.completed ? "completed" : "not completed";
-      } catch (error) {
-        console.error(`Failed to fetch todo item ${i}: ${error.message}`);
-        newStatuses[i] = "error";
-      }
+    for (let i = group.from; i <= group.to; i++) {
+      newStatuses[i] = Math.random() < 0.5;
     }
   }
 

@@ -1,13 +1,15 @@
-import React from "react";
+import React from 'react';
 
 const GroupForm = ({ index, group, updateGroup, deleteGroup }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    updateGroup(index, { ...group, [name]: value });
+    updateGroup(index, { ...group, [name]: parseInt(value) });
   };
 
   return (
     <div className="group-form">
+      <button onClick={() => deleteGroup(index)}>🗑️</button>
+      <span>Group {index + 1}</span>
       <input
         type="number"
         name="from"
@@ -27,7 +29,6 @@ const GroupForm = ({ index, group, updateGroup, deleteGroup }) => {
         max="10"
         required
       />
-      <button onClick={() => deleteGroup(index)}>🗑️</button>
     </div>
   );
 };
