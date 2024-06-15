@@ -1,0 +1,98 @@
+/* Container for the entire application */
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Styling for group form container */
+.group-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Styling for group input fields */
+.group-form input {
+  width: 50px;
+  margin: 0 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+/* Styling for the "to" span */
+.group-form span {
+  margin: 0 5px;
+}
+
+/* Styling for delete button */
+.group-form button {
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #ff4d4d;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* Container for each group */
+.group-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Styling for status section */
+.statuses {
+  margin-top: 10px;
+}
+
+.statuses p {
+  font-weight: bold;
+}
+
+.statuses ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.statuses li {
+  background-color: #e7f3ff;
+  margin: 5px 0;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* Styling for buttons */
+button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Add some space between form elements and buttons */
+.group-container + button {
+  margin-top: 20px;
+}
+
+.group-container + button + button {
+  margin-left: 10px;
+}
