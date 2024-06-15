@@ -1,5 +1,3 @@
-// src/api/todoApi.js
-
 import axios from "axios";
 
 export const getTodoItem = async (id) => {

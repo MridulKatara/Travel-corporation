@@ -1,5 +1,3 @@
-// components/GroupList.js
-
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GroupForm from "./GroupForm";

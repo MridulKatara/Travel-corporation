@@ -1,5 +1,3 @@
-// src/redux/actions.js
-
 import {
   ADD_GROUP,
   UPDATE_GROUP,
@@ -61,11 +59,11 @@ export const fetchStatuses = () => async (dispatch, getState) => {
         const response = await axios.get(
           `https://jsonplaceholder.typicode.com/todos/${i}`
         );
-        console.log(`Fetched data for todo item ${i}:`, response.data); // Log fetched data
+        console.log(`Fetched data for todo item ${i}:`, response.data); 
         newStatuses[i] = response.data.completed;
       }
     }
-    console.log("Final statuses:", newStatuses); // Log final statuses
+    console.log("Final statuses:", newStatuses);
     dispatch(setStatuses(newStatuses));
   } catch (error) {
     console.error("Error fetching statuses:", error);

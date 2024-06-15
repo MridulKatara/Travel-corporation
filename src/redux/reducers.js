@@ -1,5 +1,3 @@
-// src/redux/reducers.js
-
 import {
   ADD_GROUP,
   UPDATE_GROUP,
@@ -16,7 +14,7 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_GROUP:
-      if (state.groups.length >= 10) return state; // Limit to 10 items
+      if (state.groups.length >= 10) return state; 
       return {
         ...state,
         groups: [...state.groups, { from: "", to: "" }],
