@@ -1,19 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GroupForm from "./GroupForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import {
-  addGroup,
-  updateGroup,
-  deleteGroup,
-  fetchStatuses,
-} from "../redux/actions";
+import { addGroup, updateGroup, deleteGroup, fetchStatuses } from "../redux/actions";
 
 const GroupList = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups);
   const statuses = useSelector((state) => state.statuses);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (groups.length === 0 && statuses === null) {
@@ -32,6 +28,11 @@ const GroupList = () => {
     dispatch(addGroup());
   };
 
+  const handleShowStatus = () => {
+    setLoading(true);
+    dispatch(fetchStatuses()).finally(() => setLoading(false));
+  };
+
   return (
     <div>
       <h1>Todo Group Status</h1>
@@ -43,25 +44,29 @@ const GroupList = () => {
             updateGroup={(index, group) => dispatch(updateGroup(index, group))}
             deleteGroup={(index) => dispatch(deleteGroup(index))}
           />
-          {statuses && (
-            <div className="statuses">
-              {Array.from({ length: group.to - group.from + 1 }, (_, i) => (
-                <span key={i}>
-                  ({group.from + i}){" "}
-                  {statuses[group.from + i] ? "True" : "False"}
-                  {i !== group.to - group.from ? ", " : " "}
+          {loading ? (
+            <div className="loading">Loading...</div>
+          ) : (
+            statuses && (
+              <div className="statuses">
+                {Array.from({ length: group.to - group.from + 1 }, (_, i) => (
+                  <span key={i}>
+                    ({group.from + i}){" "}
+                    {statuses[group.from + i] ? "True" : "False"}
+                    {i !== group.to - group.from ? ", " : " "}
+                  </span>
+                ))}
+                <span className="green-tick">
+                  <FontAwesomeIcon icon={faCheck} />
                 </span>
-              ))}
-              <span className="green-tick">
-                <FontAwesomeIcon icon={faCheck} />
-              </span>
-            </div>
+              </div>
+            )
           )}
         </div>
       ))}
       <div className="buttons">
         <button onClick={handleAddGroup}>Add Group</button>
-        <button onClick={() => dispatch(fetchStatuses())}>Show Status</button>
+        <button onClick={handleShowStatus}>Show Status</button>
       </div>
     </div>
   );
