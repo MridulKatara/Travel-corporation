@@ -48,7 +48,7 @@ const GroupList = () => {
               {Array.from({ length: group.to - group.from + 1 }, (_, i) => (
                 <span key={i}>
                   ({group.from + i}){" "}
-                  {statuses[group.from + i] ? "Completed" : "Not Completed"}
+                  {statuses[group.from + i] ? "True" : "False"}
                   {i !== group.to - group.from ? ", " : " "}
                 </span>
               ))}
